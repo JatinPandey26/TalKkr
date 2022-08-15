@@ -1,0 +1,99 @@
+getAuth -> Firebase.Auth.FirebaseAuth is the gateway to the Firebase authentication API. With it, you can reference Firebase.Auth.FirebaseAuth objects to manage user accounts and credentials.
+           Get the FirebaseApp associated with this object (our app). 
+
+FirebaseApp -> FirebaseApp acts as a conduit for communication between all Firebase services used by an application. Create an instance according to settings in your Firebase configuration file.
+
+GoogleAuthProvider -> Add Firebase to your JavaScript project. Enable Google as a sign-in method in the Firebase.
+
+signInWithPopup -> it will pop up a sign in box.
+
+onAuthStateChanged -> onAuthStateChanged which notifies about changes to the user.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1)
+
+const auth = getAuth(app);
+
+get auth from firebase for our app
+
+2)
+const provider = new GoogleAuthProvider(); 
+
+we will take a authProvider 
+
+3)
+signInWithPopup(auth, provider);
+
+it will popup login box for auth(firebaseApp associated with our App) and provider(GoogleAuthProvider)
+
+4)
+
+now we will listen changes on onAuthStateChanged inside useEffect and when auth state changed we will change our user using useState
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+e.preventDefault -> The preventDefault() method cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+const db = getFirestore(app); getting fireBasestore for our app
+
+
+
+!!!!!!!!!!!!!!setting data in DB!!!!!!!!!!!!!
+
+ await addDoc(collection(db, "Messages"), // here data goes //)
+
+ addDoc helps to write data to db
+
+
+collection -> Cloud Firestore is a NoSQL, document-oriented database. Unlike a SQL database, there are no tables or rows. Instead, you store data in documents, which are organized into collections.
+
+we make small document(db) in collection and these document contains key value Pair
+
+collection(db,path(ex -> 'Messages'))
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Query in firebase ->  
+ const queryFromDB = query(collection(db, "Messages"),orderBy("createdAt", "asc"));
+
+ query(location -> collection -> db -> path : 'Messages' , condition);
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+onSnapshot - You can listen to a document with the onSnapshot() method. An initial call using the callback you provide creates a document snapshot immediately with the current contents of the single document. Then, each time the contents change, another call updates the document snapshot.
+
+
+it gives a realtime response on our db acts as a listener.
+
+onSnapshot(queryFromDB, (snap) => {
+      updateMessageArray(                   // updated MessagesArray using it;
+        snap.docs.map((item) => {  snap -> contains all the data but here we needs only docs (you can print it and see according to you)
+          const id = item.id;
+          return {
+            id,
+            ...item.data(),
+          };
+        })
+      );
+    });
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+used useRef to scroll to bottom everytime mssg added (see divForScroll)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+DEPLOYING ON netlify
+
+go create a project over there
+
+and upload your build file (npm run build -> for a optimized build)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  Here the tutorial ended  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

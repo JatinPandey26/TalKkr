@@ -1,0 +1,30 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+
+
+#myMssg{
+position: relative;
+margin-right: 0.5rem;
+background-color: lightgrey;
+padding: 0.5rem;
+border-radius: 1rem;
+
+}
+
+
+#otherMssg{
+  position: relative;
+  margin-left: 0.5rem;
+  background-color: lightgrey;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  
+  }
+
+#mssgSection::-webkit-scrollbar{
+  display: none;
+}
